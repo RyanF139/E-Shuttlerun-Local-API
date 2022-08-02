@@ -6,8 +6,7 @@ module.exports = app => {
   router.post("/login", user.Login); //Login User
 
   router.post("/change-password", user.ChangePassword) //Update Password
-  
-  
+    
   app.use('/api/v2', router);
 };
   
