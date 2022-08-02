@@ -24,7 +24,7 @@ let routes = (app) => {
 
     router.get("/nilai/list", peserta.GetDaftarCapaianPage); //Get Daftar Capaian with pagenation
 
-    router.get("/list/peserta", peserta.GetListPesertaPage); // Get Peserta By SeleksiId pagenation
+    router.get("/list/peserta", peserta.GetListPesertaPage); //Get Peserta By SeleksiId pagenation
 
     app.use("/api/v2/garjas", router);
   };
