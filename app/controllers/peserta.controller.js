@@ -16,7 +16,7 @@ const upload = async (req, res) => {
 
       var id_seleksi = req.body.seleksi_id;
       console.log(id_seleksi)
-      let path = "C:\\Users\\Ryan\\Documents\\Project TCB\\Project 2022\\E-Shuttlerun\\api-local-shuttlerun\\resources\\static\\assets\\upload\\" + req.file.filename;
+      let path = "C:\\Users\\Ryan\\Documents\\Project TCB\\Project 2022\\E-Shuttlerun\\Main Project\\E-Shuttlerun_V.01\\2. api-local-shuttlerun\\resources\\static\\assets\\upload\\" + req.file.filename;
 
         console.log(path)
       readXlsxFile(path).then((rows) => {
