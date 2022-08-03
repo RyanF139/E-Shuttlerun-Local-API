@@ -13,7 +13,7 @@ module.exports = app => {
 
     router.post("/",seleksi.CreateSeleksi); //Tamabah Seleksi
     
-    router.delete("/:id", seleksi.DeleteSeleksi); //Delete One Seleksi
+    router.delete("/delete", seleksi.DeleteSeleksi); //Delete One Seleksi
 
     router.post("/:id", seleksi.EditSeleksi); //Edit Seleksi
 

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Seleksi = db.seleksi;
+const Users = db.user;
 const Op = db.Sequelize.Op;
 
 
@@ -102,10 +103,10 @@ exports.CreateSeleksi = (req, res) => {
 
 //Delete Seleksi
 exports.DeleteSeleksi = (req, res) => {
-  const id = req.params.id;
+  const {seleksiid} = req.query;
 
   Seleksi.destroy({
-    where: { id: id }
+    where: { id: seleksiid }
   })
     .then(num => {
       if (num == 1) {
@@ -116,16 +117,40 @@ exports.DeleteSeleksi = (req, res) => {
       } else {
         res.send({
           status:"Error",
-          message: `Cannot delete Seleksi with id=${id}. Maybe Seleksi was not found!`
+          message: `Cannot delete Seleksi with id=${seleksiid}. Maybe Seleksi was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
         status:"Error",
-        message: "Could not delete Seleksi with id=" + id
+        message: "Could not delete Seleksi with id=" + seleksiid
       });
     });
+
+    // & Delete Testor
+    Users.destroy({
+      where: { seleksiid: seleksiid }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            status:"Success",
+            message: "Testor was deleted successfully!"
+          });
+        } else {
+          res.send({
+            status:"Error",
+            message: `Cannot delete Testor with id=${seleksiid}. Maybe Testor was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          status:"Error",
+          message: "Could not delete Seleksi with id=" + seleksiid
+        });
+      });
 };
 
 
