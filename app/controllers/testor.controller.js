@@ -88,8 +88,8 @@ const EditTestor = (req, res) => {
         });
       });
   };
-
-  //Delete Testor
+  
+//Delete Testor
 const DeleteTestor = (req, res) => {
     const id = req.params.id;
   
