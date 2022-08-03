@@ -3,7 +3,7 @@ const db = require("../models");
 const Users = db.user;
 const Op = db.Sequelize.Op;
 
-exports.Login = async (req, res) => {
+const Login = async (req, res) => {
     const {username, password, subjenis_test} = req.body;
     var cek = await Users.findOne({ where : {username} })
     
@@ -44,7 +44,7 @@ exports.Login = async (req, res) => {
     })            
 };
 
-exports.ChangePassword = async (req, res) => {
+const ChangePassword = async (req, res) => {
   const {user_id, old_password, new_password} = req.body;
   const id = user_id;
 
@@ -74,7 +74,11 @@ exports.ChangePassword = async (req, res) => {
       status : "Error",
       message : "Password gagal diubah" 
     })
-  }
-  
+  }  
 }; 
+
+module.exports = {        
+  Login,
+  ChangePassword,
+};
 

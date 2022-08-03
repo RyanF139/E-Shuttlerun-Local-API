@@ -4,7 +4,7 @@ const Users = db.user;
 const Op = db.Sequelize.Op;
 
 
-exports.getSeleksi = async (req, res) => {  
+const getSeleksi = async (req, res) => {  
   Seleksi.findAll()
     .then(data => {
       res.status(200).json 
@@ -22,7 +22,7 @@ exports.getSeleksi = async (req, res) => {
     });
 };
 
-exports.findSeleksiStarted = (req, res) => {    
+const findSeleksiStarted = (req, res) => {    
   Seleksi.findAll({ where: { status: "started" } })
     .then(data => {
       res.status(200).json
@@ -40,7 +40,7 @@ exports.findSeleksiStarted = (req, res) => {
     });
 };
 
-exports.findSeleksiDone = (req, res) => {    
+const findSeleksiDone = (req, res) => {    
   Seleksi.findAll({ where: { status: "DONE" } })
     .then(data => {
       res.status(200).json
@@ -60,7 +60,7 @@ exports.findSeleksiDone = (req, res) => {
 
 
 // Create and Save a new Seleksi
-exports.CreateSeleksi = (req, res) => {
+const CreateSeleksi = (req, res) => {
   // Validate request
   if (!req.body.nama) {
     res.status(400).send({
@@ -102,7 +102,7 @@ exports.CreateSeleksi = (req, res) => {
 
 
 //Delete Seleksi
-exports.DeleteSeleksi = (req, res) => {
+const DeleteSeleksi = (req, res) => {
   const {seleksiid} = req.query;
 
   Seleksi.destroy({
@@ -155,7 +155,7 @@ exports.DeleteSeleksi = (req, res) => {
 
 
 //Edit Seleksi
-exports.EditSeleksi = (req, res) => {
+const EditSeleksi = (req, res) => {
   const id = req.params.id;
 
   Seleksi.update(req.body, {
@@ -184,7 +184,7 @@ exports.EditSeleksi = (req, res) => {
 
 
 //Get Seleksi by Id
-exports.GetSeleksiId = async (req, res) => {
+const GetSeleksiId = async (req, res) => {
   const id = req.params.id;  
   Seleksi.findByPk(id)
     .then(data => {
@@ -208,6 +208,15 @@ exports.GetSeleksiId = async (req, res) => {
     });
 };
 
+module.exports = {        
+  getSeleksi,
+  findSeleksiStarted,
+  findSeleksiDone,
+  CreateSeleksi,
+  DeleteSeleksi,
+  EditSeleksi,
+  GetSeleksiId,
+};
 
 
   
