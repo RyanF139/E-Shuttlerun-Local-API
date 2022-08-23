@@ -8,9 +8,11 @@ let routes = (app) => {
 
     router.post("", testor.RegisterTestor); // Tambah Testor
 
-    router.post("/:id", testor.EditTestor); // Edit Testor
+    router.put("/:id", testor.EditTestor); // Edit Testor
 
     router.delete("/:id", testor.DeleteTestor); // Delete Testor
+
+    router.get("/user", testor.GetUserById);
 
     app.use("/api/v2/garjas/testor", router);
   };

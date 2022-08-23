@@ -134,7 +134,7 @@ const GetPesertaId = (req, res) => {
     const {seleksiid} = req.query;    
     console.log(seleksiid);
 
-    Peserta.findAll(  {order : [['waktu_selesai','DESC']] , where: {seleksiid :seleksiid , status : true }})
+    Peserta.findAll(  { attributes:[['id','nomor_test'],'nama','hasil',['testor','nama_testor'],'waktu_selesai'],order : [['waktu_selesai','DESC']] , where: {seleksiid :seleksiid , status : true }})
       .then(data => {
         res.status(200).json
         ({
@@ -153,7 +153,7 @@ const GetPesertaId = (req, res) => {
 
   //Post Nilai
   const PostNilai= async (req, res) => {
-    const {pesertaid, waktu, namatestor, subjenis} = req.body;
+    const {pesertaid, waktu, namatestor, subjenis_test} = req.body;
     const id = pesertaid;
     const datetime =new Date().toLocaleString();
     
@@ -169,15 +169,15 @@ const GetPesertaId = (req, res) => {
     }
     
     
-    var user = await Peserta.update({hasil : waktu, testor : namatestor, subjenis_test : subjenis, status : true, waktu_selesai : datetime} , {where :{ id : id}});
-    console.log("WAKTU" + datetime);    
+    var user = await Peserta.update({hasil : waktu, testor : namatestor, subjenis_test : subjenis_test, status : true, waktu_selesai : datetime} , {where :{ id : id}});
+    //console.log("WAKTU" + datetime);    
     if(user == 1)
     {
       res.status(200).json
       ({
         status : "Success",
         message : "Hasil berhasil di insert", 
-        wktu : datetime
+        
       })
     }else{
       res.status(400).json
@@ -192,7 +192,7 @@ const GetPesertaId = (req, res) => {
   //Get Peserta by nrp
   const GetPesertaNrp = async (req, res) => {
     const {nrp} = req.query;
-    var cek = await Peserta.findOne({ where : {nrp} })
+    var cek = await Peserta.findOne({ where : {nrp}})
     console.log(cek);    
     Peserta.findAll({ where: { nrp: nrp } })
       .then(data => {
@@ -225,16 +225,19 @@ const GetPesertaId = (req, res) => {
   };
   
  //Get Niai Terbaik
- const GetNilaiTerbaik = (req, res) => {
+ const GetNilaiTerbaik = async (req, res) => {
   const {seleksiid, subjenis_test} = req.query;
-  console.log(subjenis_test);
-
-  Peserta.findAll(  {order : [['hasil','ASC']] , where: {seleksiid :seleksiid , subjenis_test : subjenis_test , status : true}})
+  console.log(subjenis_test);      
+  Peserta.findAll(   {attributes:[['id','nomor_test'],'nama','hasil',['testor','nama_testor'],'waktu_selesai'] , order : [['hasil','ASC']] , where: {seleksiid :seleksiid , subjenis_test : subjenis_test , status : true}})
+  // Peserta.findAll({  order : [['hasil','ASC']] , where: {seleksiid :seleksiid , subjenis_test : subjenis_test , status : true}})
     .then(data => {
+      data.nomor_test = data.id
+      console.log(data);
       res.status(200).json
       ({
         status : "Success",                
-        data : data
+        data : data  
+                        
       })
     })
     .catch(err => {
@@ -258,9 +261,9 @@ const GetDashboardInfo= async (req, res) => {
         message: "Info Dashboard",
         data:
         {
-           jumlah_peserta : Jumlah_peserta,
-           antrian : Antrian,
-           selesai : Selesai,
+           total_peserta : Jumlah_peserta,
+           belum_dinilai : Antrian,
+           sudah_dinilai : Selesai,
 
         }
     })

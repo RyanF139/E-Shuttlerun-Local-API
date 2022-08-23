@@ -117,9 +117,31 @@ const DeleteTestor = (req, res) => {
       });
   };
 
+  //Get Testor by IdSeleksi
+const GetUserById = (req, res) => {
+  const {subjenis_test, user_id} = req.query;
+  //console.log(seleksiid);    
+  Users.findAll({ where: { id: user_id , subjenis_test : subjenis_test} })
+    .then(data => {
+      res.status(200).json
+      ({
+        status : "Success",      
+        message: "Testor ID = " + user_id,
+        data : data
+      })
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Peserta."
+      });
+    });
+};
+
   module.exports = {        
     GetTestorBySeleksiId,    
     RegisterTestor,
     EditTestor,
-    DeleteTestor
+    DeleteTestor,
+    GetUserById,
   };

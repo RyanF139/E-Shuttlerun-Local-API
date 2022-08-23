@@ -34,7 +34,7 @@ db.sequelize.sync()
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to shuttlerun API." });
+  res.json({ message: "Welcome to local server shuttlerun." });
 });
 
 require("./app/routes/tutorial.routes")(app);
