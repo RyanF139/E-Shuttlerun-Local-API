@@ -292,7 +292,7 @@ const GetDaftarCapaianPage = (req, res) => {
  
   const { limit, offset } = getPaginationCapaian(page, per_page);  
   
-  Peserta.findAndCountAll({order : [['waktu_selesai','DESC']] , where: {
+  Peserta.findAndCountAll({ attributes:[['id','nomor_test'],'nama','hasil',['testor','nama_testor'],'waktu_selesai'], order : [['waktu_selesai','DESC']] , where: {
     seleksiid :seleksiid ,
      status : true, 
      subjenis_test : subjenis_test,
