@@ -363,6 +363,27 @@ const GetListPesertaPage = (req, res) => {
     });
 };
 
+//Sincronize Data Peserta
+const SincronizeDataPeserta= async (req, res) => {
+  const {seleksiid, subjenis_test} = req.query;
+
+  var Jumlah_peserta = await Peserta.count({where : {seleksiid : seleksiid, subjenis_test : subjenis_test}});
+  var Antrian = await Peserta.count({where : {seleksiid : seleksiid , status : false , subjenis_test : subjenis_test}});
+  var Selesai = await Peserta.count({where : {seleksiid : seleksiid , status : true , subjenis_test : subjenis_test}});
+  return res.status(200).json
+    ({
+        status : "Success",
+        message: "Info Dashboard",
+        data:
+        {
+           total_peserta : Jumlah_peserta,
+           belum_dinilai : Antrian,
+           sudah_dinilai : Selesai,
+
+        }
+    })
+};
+
 
 
 

@@ -6,7 +6,7 @@ const app = express();
 
 
 var corsOptions = {
-  origin: "http://localhost:8010" //IP Server
+  origin: "http://localhost:8020" //IP Server
 };
 
 app.use(cors(corsOptions));
@@ -43,7 +43,7 @@ require("./app/routes/seleksi.routes")(app);
 require("./app/routes/peserta.routes")(app);
 require("./app/routes/testor.routes")(app);
 // set port, listen for requests
-const PORT = process.env.PORT || 8010;
+const PORT = process.env.PORT || 8020;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
